@@ -252,7 +252,7 @@
     const ICON_REPLAY = '<svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>';
 
     let playing = false, t = 0, raf = 0, lastTs = 0;
-    const SPEED = (opts.speed || 1) * 1.0; // play-units per second
+    const SPEED = (opts.speed || 2) * 1.0; // play-units per second; default 2x for realistic pace. Pass speed:1 for the old pace.
 
     function render() {
       // clear dynamic layer
@@ -358,7 +358,7 @@
       mount(el, play, {
         autoplay: el.hasAttribute("data-autoplay"),
         loop: el.hasAttribute("data-loop"),
-        speed: parseFloat(el.getAttribute("data-speed")) || 1,
+        speed: parseFloat(el.getAttribute("data-speed")) || 2,
       });
     });
   }
