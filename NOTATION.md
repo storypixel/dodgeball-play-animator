@@ -18,23 +18,31 @@ Two parts, like chess:
 Top-down "chess diagram." THEM on top, US on the bottom, center line across the
 middle — identical to the animator.
 
-- **Files** `a`–`j` left → right (10 columns).
+- **Files** are the **columns, one per player** — the grid is **parametric to
+  team size**. For an `N`-a-side play there are `N` columns, `a`, `b`, … (the
+  first `N` letters). **Default team size is 8** → files `a`–`h`. A 10-a-side
+  play uses `a`–`j`. The columns divide the court width evenly.
 - **Ranks** `1`–`10` bottom → top: rank `1` = OUR back line, rank `10` = THEIR
-  back line, center line sits between `5` and `6`.
+  back line, center line sits between `5` and `6`. (Depth is fixed, independent
+  of team size.)
 - A square is `file`+`rank`, e.g. `f6` (just over center, right-of-middle).
 
-Mapping to the animator's `0..100` space (so the parser is exact):
+Mapping to the animator's `0..100` space (so the parser is exact). `N` is the
+team size, taken from the DBF (the larger of the two sides):
 ```
-x = (fileIndex + 0.5) * 10      // a→5, j→95
-y = (10 - rank + 0.5) * 10      // rank1→95 (us back), rank10→5 (them back)
+x = (fileIndex + 0.5) * (100 / N)   // N=8: a→6.25, h→93.75 · N=10: a→5, j→95
+y = (10 - rank + 0.5) * 10          // rank1→95 (us back), rank10→5 (them back)
 ```
-Need finer than a grid square? Use an explicit escape: `(x,y)` with raw
-0..100 numbers, e.g. `U6-(54,68)`. Everything else stays on the grid.
+So the same file letter sits at a different x for a different team size — the
+grid scales with the roster. Need finer than a grid square (or mid-play motion
+off the column lines)? Use an explicit escape: `(x,y)` with raw `0..100`
+numbers, e.g. `U6-(54,68)`. Everything else stays on the grid.
 
 ## 2. Pieces
 
-- **US players** `U1`…`U10` — `U1` is our far-left, `U10` far-right.
-- **THEM players** `T1`…`T10`.
+- **US players** `U1`…`UN` — `U1` is our far-left, `UN` far-right (default
+  8-a-side → `U1`…`U8`; supports up to `U10`).
+- **THEM players** `T1`…`TN`.
 - **Loaded** (holding a ball) is a `*` suffix: `U1*`.
 - **Loose balls** are `b` with an owner tag in setup: `bU` (ours), `bT`
   (theirs), `bN` (neutral / on the line), each with a square.
