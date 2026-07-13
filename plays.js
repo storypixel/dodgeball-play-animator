@@ -126,9 +126,9 @@
 
     "insides": {
       id: "insides",
-      name: "Insides",
+      name: "Inside",
       badge: "4-ball offense",
-      call: '"Insides on 5"',
+      call: '"Inside on 5"',
       desc: "The two middle players pick one target — here the 5th from the left. Hits from the center are hard to read until the ball is already gone.",
       setup: {
         us: row(10, US_BACK, [1, 5, 6, 10]),   // 4 balls — middle two throw, corners hold
@@ -136,7 +136,7 @@
       },
       steps: [
         { label: "Set — corners fake", dur: 0.8, fakes: [{ team: "us", n: 1 }, { team: "us", n: 10 }] },
-        { label: "Insides on 5", dur: 1.1,
+        { label: "Inside on 5", dur: 1.1,
           throws: [
             { from: { team: "us", n: 5 }, to: { team: "them", n: 5 }, curve: -22 },
             { from: { team: "us", n: 6 }, to: { team: "them", n: 5 }, curve: -14 },
@@ -156,7 +156,7 @@
         them: row(10, THEM_BACK, [2, 9]),      // they hold the other 2
       },
       steps: [
-        { label: "Set — insides fake", dur: 0.8, fakes: [{ team: "us", n: 5 }, { team: "us", n: 6 }] },
+        { label: "Set — inside fake", dur: 0.8, fakes: [{ team: "us", n: 5 }, { team: "us", n: 6 }] },
         { label: "Converge on 4", dur: 1.1,
           throws: [
             { from: { team: "us", n: 1 }, to: { team: "them", n: 4 }, curve: -20 },

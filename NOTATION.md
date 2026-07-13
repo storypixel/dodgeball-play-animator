@@ -32,8 +32,9 @@ Top-down "chess diagram." THEM on top, US on the bottom, center line across
 the middle.
 
 - **Lanes.** Each player owns the column they start in: `U4`'s lane is the 4th
-  from the left on our side. Lanes are parametric to team size (default 8 a
-  side; set `[Players "10"]` for 10s).
+  from the left on our side. Lanes use the full playable width, with the first
+  and last players close to their respective sidelines. They are parametric to
+  team size (default 8 a side; set `[Players "10"]` for 10s).
 - **Depths.** Four named depths, symmetric for both teams, each measured from
   that team's own point of view:
 
@@ -42,7 +43,14 @@ the middle.
   | `line` | at the center line, attacking or grabbing | 5 |
   | `mid`  | throwing range, stepped up | 15 |
   | `deep` | fallen back after an attack | 25 |
-  | `back` | own back line (the default start) | 40 |
+  | `back` | own back line (the default start) | 45 |
+
+- **Huddle.** `huddle` is the tight, staggered two-row call position in the
+  horizontal middle of a team's side, just forward of its own back line. A set
+  offense gathers only its ball-holders there (`U1458-huddle`) and then fans
+  those same holders into their assigned lanes at the front line
+  (`U1458-line`). Players without balls stay back. Defensive calls and the
+  opening rush normally skip the parley.
 
 - **Escapes**, rarely needed: a bare number is an exact depth in your own lane
   (`U5-68`), and `(x,y)` is a fixed point in the animator's 0..100 space
@@ -74,7 +82,7 @@ One token per action; the verb is a single symbol.
 
 | verb | token | meaning |
 |------|-------|---------|
-| run | `U3-line` / `U3-68` / `U3-(48,65)` | move (named depth, exact depth in lane, fixed point) |
+| run | `U3-line` / `U1458-huddle` / `U3-68` / `U3-(48,65)` | move (named formation/depth, exact depth in lane, fixed point) |
 | grab | `U9*` / `U9*2` | pick up the nearest loose ball / the two nearest |
 | run + grab | `U8-line*2` | move there and grab in one beat |
 | pass | `U8>U5` | toss to a teammate |
@@ -167,7 +175,7 @@ action    := actors ( run | grab | pass | throw | fake | block | catch | dodge |
            | "+" player
 actors    := ("U"|"T") DIGITS          (digits fan to a group when not a roster number)
 run       := "-" dest [ "*" [COUNT] ]
-dest      := "line" | "mid" | "deep" | "back" | NUMBER | "(" NUMBER "," NUMBER ")" | FILE RANK
+dest      := "huddle" | "line" | "mid" | "deep" | "back" | NUMBER | "(" NUMBER "," NUMBER ")" | FILE RANK
 grab      := "*" [ COUNT | ball ]
 pass      := ">" player
 throw     := "@" player [ outcome ] [ "~" SIGNED_INT ]
