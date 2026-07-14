@@ -89,13 +89,13 @@
       name: "Kill Left",
       badge: "left kill",
       call: '"Kill left on 3"',
-      desc: "The two left-side ball-holders both throw at one specified target. Here players 4 and 5 — the two leftmost holding balls, not necessarily the far-left players — fire at the same opponent while everyone else pump-fakes to freeze the defense.",
+      desc: "The two left-side ball-holders both throw at one specified target. Here players 4 and 5 — the two leftmost holding balls, not necessarily the far-left players — fire at the same opponent after everyone with a ball pump-fakes to freeze the defense.",
       setup: {
         us: row(10, US_BACK, [4, 5, 6, 7]),   // 4 have balls; the two LEFT ball-holders throw
         them: row(10, THEM_BACK, [3, 8]),
       },
       steps: [
-        { label: "Set — fakes", dur: 0.8, fakes: [{ team: "us", n: 6 }, { team: "us", n: 7 }] },
+        { label: "Set — everyone with a ball fakes", dur: 0.8, fakes: [{ team: "us", n: 4 }, { team: "us", n: 5 }, { team: "us", n: 6 }, { team: "us", n: 7 }] },
         { label: "Kill left on 3", dur: 1.1,
           throws: [
             { from: { team: "us", n: 4 }, to: { team: "them", n: 2 }, curve: -16 },
@@ -109,13 +109,13 @@
       name: "Kill Right",
       badge: "right kill",
       call: '"Kill right on 3"',
-      desc: "The mirror of Kill Left: the two right-side ball-holders both throw at one specified target. Here players 6 and 7 — the two rightmost holding balls, not necessarily the far-right players — fire at the same opponent while everyone else pump-fakes.",
+      desc: "The mirror of Kill Left: the two right-side ball-holders both throw at one specified target. Here players 6 and 7 — the two rightmost holding balls, not necessarily the far-right players — fire at the same opponent after everyone with a ball pump-fakes.",
       setup: {
         us: row(10, US_BACK, [4, 5, 6, 7]),   // 4 have balls; the two RIGHT ball-holders throw
         them: row(10, THEM_BACK, [3, 8]),
       },
       steps: [
-        { label: "Set — fakes", dur: 0.8, fakes: [{ team: "us", n: 4 }, { team: "us", n: 5 }] },
+        { label: "Set — everyone with a ball fakes", dur: 0.8, fakes: [{ team: "us", n: 4 }, { team: "us", n: 5 }, { team: "us", n: 6 }, { team: "us", n: 7 }] },
         { label: "Kill right on 3", dur: 1.1,
           throws: [
             { from: { team: "us", n: 7 }, to: { team: "them", n: 9 }, curve: 16 },
@@ -135,7 +135,7 @@
         them: row(10, THEM_BACK, [3, 8]),      // they hold the other 2
       },
       steps: [
-        { label: "Set — corners fake", dur: 0.8, fakes: [{ team: "us", n: 1 }, { team: "us", n: 10 }] },
+        { label: "Set — everyone with a ball fakes", dur: 0.8, fakes: [{ team: "us", n: 1 }, { team: "us", n: 5 }, { team: "us", n: 6 }, { team: "us", n: 10 }] },
         { label: "Inside on 5", dur: 1.1,
           throws: [
             { from: { team: "us", n: 5 }, to: { team: "them", n: 5 }, curve: -22 },
@@ -156,7 +156,7 @@
         them: row(10, THEM_BACK, [2, 9]),      // they hold the other 2
       },
       steps: [
-        { label: "Set — inside fake", dur: 0.8, fakes: [{ team: "us", n: 5 }, { team: "us", n: 6 }] },
+        { label: "Set — everyone with a ball fakes", dur: 0.8, fakes: [{ team: "us", n: 1 }, { team: "us", n: 5 }, { team: "us", n: 6 }, { team: "us", n: 10 }] },
         { label: "Converge on 4", dur: 1.1,
           throws: [
             { from: { team: "us", n: 1 }, to: { team: "them", n: 4 }, curve: -20 },
