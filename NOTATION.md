@@ -5,10 +5,20 @@ the spirit of chess algebraic notation. A play written in DBN compiles to the
 play JSON the animator consumes, so anything you can write, the animator can
 render — and anyone can embed.
 
-The design rule, borrowed from chess: **you write intent; the engine owns
-aesthetics.** The default setup is implied, positions are lane-relative words,
-and ball-flight curves are computed. A full play is a handful of speakable
-lines:
+Two design rules, and they bind every future capability:
+
+1. Borrowed from chess: **you write intent; the engine owns aesthetics.** The
+   default setup is implied, positions are lane-relative words, and
+   ball-flight curves are computed.
+2. **No magic — notation for literally everything.** Anything the animator can
+   draw must be writable in DBN, and every named word's behavior must be
+   specified in this document with exact semantics (a `huddle` is not "roughly
+   a huddle"; it is the layout defined below). New engine abilities ship in
+   three parts or not at all: the notation token, the spec entry here, and a
+   test. If a behavior can't be written, overridden, or escaped by hand
+   (`(x,y)` always works), it doesn't belong in the engine.
+
+A full play is a handful of speakable lines:
 
 ```
 [Play "Home"]
@@ -40,17 +50,24 @@ the middle.
 
   | word | meaning | distance from center line |
   |------|---------|--------------------------|
-  | `line` | at the center line, attacking or grabbing | 5 |
+  | `line` | up at the center line with a standard small margin — the player circle (and a fully cocked pump-fake ball) always stays visibly behind the line | 8 |
   | `mid`  | throwing range, stepped up | 15 |
   | `deep` | fallen back after an attack | 25 |
   | `back` | own back line (the default start) | 45 |
 
-- **Huddle.** `huddle` is the tight, staggered two-row call position in the
-  horizontal middle of a team's side, just forward of its own back line. A set
-  offense gathers only its ball-holders there (`U1458-huddle`) and then fans
-  those same holders into their assigned lanes at the front line
-  (`U1458-line`). Players without balls stay back. Defensive calls and the
-  opening rush normally skip the parley.
+- **Huddle.** `huddle` is a single shoulder-to-shoulder rank in the horizontal
+  middle of a team's side, just forward of its own back line: the movers stand
+  touching (one player diameter apart, a hair of daylight), in left-to-right
+  order, centered on midcourt. A set offense gathers only its ball-holders
+  there (`U1458-huddle`). Players without balls stay back. Defensive calls and
+  the opening rush skip the parley.
+
+- **Group formations.** When several players move together to a named depth
+  (`U1458-line`), they do NOT keep their starting lanes: the group fans out
+  **one standard lane-unit apart, centered on the group's own lane mean**, in
+  left-to-right order (paths never cross). A lone mover (`U3-line`) goes
+  straight down its own lane. Need bespoke spacing? Use the escapes below —
+  every formation the engine can draw is writable by hand.
 
 - **Escapes**, rarely needed: a bare number is an exact depth in your own lane
   (`U5-68`), and `(x,y)` is a fixed point in the animator's 0..100 space
@@ -120,6 +137,18 @@ seconds (default 1).
 ```
 <n>. {label} :dur  <action> <action> …
 ```
+
+**Beat captions.** Each beat also compiles a terse `summary` string derived
+strictly from its actions — `to the line`, `1 pump fake`, `throw at 5` —
+joined with `·` when a beat mixes kinds (`to the line · grab`).
+Named-formation moves use the formation word (`huddle` →
+`parley: call play and choose target`, `back` → `fall back`); moves to exact
+depths or `(x,y)` points summarize as `move`. The widget shows these as
+numbered STATES in a plain text strip above the court: `1. starting position`
+before anything runs, then `2. parley: call play and choose target`,
+`3. to the line`, … as each beat plays or lands. The `{label}` stays the long,
+human-authored form; hand-written play JSON can set `summary` on any step
+directly.
 
 ## 6. Worked example — the opening rush
 

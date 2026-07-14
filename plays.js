@@ -50,6 +50,7 @@
       steps: [
         {
           label: "Rush — the two on the right grab our three (2 + 1)", dur: 1.3,
+          summary: "move · grab",
           moves: [
             { team: "us", n: 10, to: [92, 54] },
             { team: "us", n: 9, to: [80, 54] },
@@ -65,6 +66,7 @@
         },
         {
           label: "Pitch back — attacker steps up", dur: 0.9,
+          summary: "move · pass",
           passes: [{ from: { team: "us", n: 10 }, to: { team: "us", n: 6 } }],
           moves: [
             { team: "us", n: 6, to: [54, 68] },     // attacker comes up about halfway
@@ -74,6 +76,7 @@
         },
         {
           label: "Free look — hit a regressing rusher", dur: 1.0,
+          summary: "move · throw at 2",
           moves: [
             { team: "them", n: 1, to: [12, 20] },
             { team: "them", n: 2, to: [24, 20] },
